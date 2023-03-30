@@ -57,31 +57,40 @@ function generatoreGriglia() {
 }
 
 // funzione per gestire il click su una cella
+
+
 function gestisciClick(event) {
   const elementoCliccato = event.target;
   const elementoG = elementoCliccato.innerText;
 
   if (bombe.includes(parseInt(elementoG))) {
-    // abbiamo cliccato su una bomba, terminiamo la partita
-    alert("Hai preso una bomba! Gioco terminato.");
+    
+    // bomba termina partita
+
+    const punteggio = document.querySelectorAll('.clicked').length;
+    alert("Hai preso una bomba! Gioco terminato. Punteggio: " + punteggio);
     elementoCliccato.style.backgroundColor = "red";
     contenitoreGriglia.removeEventListener('click', gestisciClick);
 
-    // resettiamo la griglia per una nuova partita
+    // reset griglia
+
     contenitoreGriglia.innerHTML = '';
     bombe = [];
   } else {
-    //quando  la cella cliccata non è una bomba, la coloriamo di azzurro
+
+    //quando  la cella cliccata non è una bomba, colo blu
+   
     console.log("Hai cliccato sulla cella numero: " + elementoG);
     elementoCliccato.classList.add('clicked');
     elementoCliccato.style.backgroundColor = "lightblue";
 
+    // incremento il punteggio
+    const punteggio = document.querySelectorAll('.clicked').length;
+
     // controllo se l'utente ha vinto la partita
-    const celleCliccate = document.querySelectorAll('.clicked');
-    const numCelleCliccate = celleCliccate.length;
     const numCelleSenzaBomba = contenitoreGriglia.children.length - bombe.length;
 
-    if (numCelleCliccate === numCelleSenzaBomba) {
+    if (punteggio === numCelleSenzaBomba) {
       alert("Complimenti, hai vinto! Hai trovato tutte le celle che non erano delle bombe.");
       contenitoreGriglia.removeEventListener('click', gestisciClick);
 
@@ -91,5 +100,6 @@ function gestisciClick(event) {
     }
   }
 }
+
 
 
